@@ -30,6 +30,10 @@ GameEngine::GameEngine()
     window.create(VideoMode(EngineContext::screeSize.x, EngineContext::screeSize.y), "Engine");
     window.setFramerateLimit(EngineContext::fps);
     window.setVerticalSyncEnabled(true);
+    ImGui::SFML::SetRenderTarget(window);
+    ImGui::SFML::InitImGuiRendering();
+    ImGui::SFML::SetWindow(window);
+    ImGui::SFML::InitImGuiEvents();
     EngineContext::window = &window;
 }
 void GameEngine::update(Time delta)
@@ -74,8 +78,11 @@ void GameEngine::mainloop()
 {
     while(window.isOpen())
     {
+        ImGui::SFML::UpdateImGui();
+        ImGui::SFML::UpdateImGuiRendering();
         while(window.pollEvent(_event))
         {
+            ImGui::SFML::ProcessEvent(_event);
             if(_event.type == Event::Closed)
                 window.close();
             event(_event);
@@ -83,7 +90,9 @@ void GameEngine::mainloop()
         update(time);
         window.clear(Color::Black);
         draw(window);
+        ImGui::Render();
         window.display();
         time = clock.restart();
     }
+    ImGui::SFML::Shutdown();
 }

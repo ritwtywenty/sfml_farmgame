@@ -1,8 +1,14 @@
 #pragma once
+
 #include <SFML/Graphics.hpp>
+#include <imgui/imgui.h>
+#include <imgui/imgui-rendering-SFML.h>
+#include <imgui/imgui-events-SFML.h>
+
 #include "EngineNodes.hpp"
 #include "EngineContext.hpp"
 #include "Features.hpp"
+
 using namespace sf;
 using namespace EngineNodes;
 
